@@ -1,0 +1,13 @@
+development:
+  clients:
+    default:
+      database: tasks_db
+      hosts:
+        - <%= ENV['MONGODB_HOST'] %>:<%= ENV['MONGODB_PORT'] %>
+      options:
+        user: <%= ENV['MONGODB_USER'] %>
+        password: <%= ENV['MONGODB_PASS'] %>
+        roles:
+          - "dbOwner"
+        log_level: :debug
+        auth_source: "admin"

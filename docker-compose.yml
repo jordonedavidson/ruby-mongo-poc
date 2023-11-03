@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  ruby:
+    build: .
+    container_name: rm-app
+    user: "1000:1000"
+    ports:
+      - "4568:4567"
+    volumes:
+      - ./.env:/usr/src/app/.env
+    env_file:
+      - ./.env
+    networks:
+      - ruby-mongo
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    container_name: rm-db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASS}
+    user: "1000:1000"
+    networks:
+      - ruby-mongo
+    volumes:
+      - ./data:/data/db
+
+networks:
+  ruby-mongo:
